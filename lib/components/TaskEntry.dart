@@ -4,32 +4,29 @@ import '../models/Task.dart';
 import '../utils/Constants.dart';
 
 class TaskEntry extends StatefulWidget {
-  TaskEntry(this.task, this.expanded);
+  TaskEntry(this.task);
 
   Task task;
-  bool expanded;
 
   @override
-  _TaskEntryState createState() => _TaskEntryState(this.task, this.expanded);
+  _TaskEntryState createState() => _TaskEntryState(this.task);
 }
 
 class _TaskEntryState extends State<TaskEntry> {
-  _TaskEntryState(this.task, this.expanded);
+  _TaskEntryState(this.task);
 
   Task task;
-  bool expanded;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(widget.expanded);
         setState(() {
-          widget.expanded = !widget.expanded;
+          task.expanded = !task.expanded;
         });
       },
       child: AnimatedContainer(
-        height: widget.expanded ? 160 : 60,
+        height: task.expanded ? 160 : 60,
         width: Constants.maxWidth * 0.8,
         margin: EdgeInsets.symmetric(vertical: 8.5),
         duration: Duration(milliseconds: 120),
@@ -107,7 +104,7 @@ class _TaskEntryState extends State<TaskEntry> {
               ],
             ),
           ),
-          widget.expanded
+          task.expanded
               ? Container(
                   height: 100,
                   padding: EdgeInsets.symmetric(horizontal: 26, vertical: 12),
