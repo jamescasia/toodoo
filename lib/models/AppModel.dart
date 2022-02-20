@@ -8,68 +8,111 @@ class AppModel extends Model {
 
   ViewingState viewingState = ViewingState.All;
   AppState appState = AppState.ViewingTasks;
+  Task? taskBeingDeleted;
+  Task? taskBeingMarkedDone;
 
   AppModel() {
-    tasks = [
-      Task(1, "Walk the dogs", "walk the dogs in ayala and do 5 laps", false,
-          true),
-      Task(
-          2,
-          "Follow your tempo",
-          "Follow follow follow follow your tempo your follow follow",
-          true,
+    this.setTasks([
+      Task("1", "Walk the dogs", "walk the dogs and do 5 laps", true, false),
+      Task("2", "Get laundry", "Get laundry at laundryhouse at 3PM", false,
           false),
-      Task(3, "Get laundry", "Get laundry at laundryhouse at 3PM", true, true),
-      Task(
-          4,
-          "Study for Calculus exam",
-          "Study for calculus exam: Limits, Infinite Series, Limits at Infinity",
-          false,
-          true),
-      Task(1, "Walk the dogs", "walk the dogs in ayala and do 5 laps", false,
+      Task("3", "Study for Calculus exam", "walk the dogs and do 5 laps", true,
           false),
-      Task(
-          2,
-          "Follow your tempo",
-          "Follow follow follow follow your tempo your follow follow",
-          true,
-          true),
-      Task(3, "Get laundry", "Get laundry at laundryhouse at 3PM", true, false),
-      Task(
-          4,
-          "Study for Calculus exam",
-          "Study for calculus exam: Limits, Infinite Series, Limits at Infinity",
-          false,
-          true),
-      Task(1, "Walk the dogs", "walk the dogs in ayala and do 5 laps", false,
-          true),
-      Task(
-          2,
-          "Follow your tempo",
-          "Follow follow follow follow your tempo your follow follow",
-          true,
-          false),
-      Task(3, "Get laundry", "Get laundry at laundryhouse at 3PM", true, true),
-    ];
-    this.tasksBeingViewed = tasks;
+      Task("4", "Go sleep", "Get laundry at laundryhouse at 3PM", false, false),
+    ]);
+    this.tasksBeingViewed = List.from(this.tasks);
   }
 
   // Switch Viewing State
   void viewAllTasks() {
-    this.viewingState = ViewingState.All;
-    this.tasksBeingViewed = tasks;
+    viewingState = ViewingState.All;
+    tasksBeingViewed = List.from(tasks);
     notifyListeners();
   }
 
   void viewDoneTasks() {
-    this.viewingState = ViewingState.Done;
-    this.tasksBeingViewed = this.tasks.where((e) => e.done).toList();
+    viewingState = ViewingState.Done;
+    tasksBeingViewed = new List.from(tasks.where((t) => t.done).toList());
+
     notifyListeners();
   }
 
   void viewNotDoneTasks() {
     this.viewingState = ViewingState.NotDone;
-    this.tasksBeingViewed = this.tasks.where((e) => !e.done).toList();
+    tasksBeingViewed = new List.from(tasks.where((t) => !t.done).toList());
+
+    notifyListeners();
+  }
+
+  // Update tasks
+  void deleteTask() {
+    this.tasks.retainWhere((t) => t.id != this.taskBeingDeleted?.id);
+    this.tasksBeingViewed.retainWhere((t) => t.id != this.taskBeingDeleted?.id);
+    notifyListeners();
+  }
+
+  void updateTask(task) {
+    this.tasks.map((t) {
+      if (t.id == task.id) {
+        return task;
+      }
+      return t;
+    });
+
+    this.tasksBeingViewed.map((t) {
+      if (t.id == task.id) {
+        return task;
+      }
+      return t;
+    });
+    notifyListeners();
+  }
+
+  void setTasks(tasks) {
+    this.tasks = tasks;
+    this.tasksBeingViewed = this.tasks;
+  }
+
+  void addTask(task) {
+    this.tasks.add(task);
+    if (this.viewingState != ViewingState.NotDone) {
+      this.tasksBeingViewed.add(task);
+    }
+    notifyListeners();
+  }
+
+  // Show add task modal
+  void showAddTaskModal() {
+    this.appState = AppState.AddingTask;
+    notifyListeners();
+  }
+
+  void hideAddTaskModal() {
+    this.appState = AppState.ViewingTasks;
+    notifyListeners();
+  }
+
+  // Show delete task modal
+  void showDeleteTaskModal(Task task) {
+    this.appState = AppState.DeletingTask;
+    this.taskBeingDeleted = task;
+    notifyListeners();
+  }
+
+  void hideDeleteTaskModal() {
+    this.appState = AppState.ViewingTasks;
+    notifyListeners();
+  }
+
+  // show finish task modal
+  void showMarkDoneTaskModal(Task task) {
+    this.appState = AppState.MarkingDoneTask;
+    this.taskBeingMarkedDone = task;
+    notifyListeners();
+  }
+
+  void hideMarkDoneTaskModal() {
+    this.appState = AppState.ViewingTasks;
     notifyListeners();
   }
 }
@@ -80,6 +123,5 @@ enum AppState {
   AddingTask,
   DeletingTask,
   MarkingDoneTask,
-  MarkingUndoneTask,
   ViewingTasks,
 }
