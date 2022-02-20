@@ -11,13 +11,13 @@ class LabelChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: selected ? 1.1 : 1,
+      scale: selected ? 1.12 : 1,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: selected ? 6 : 4),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey.withOpacity(selected ? 0.3 : 0.0),
               blurRadius: 2.0,
               offset: Offset(0, 1))
         ], color: color, borderRadius: BorderRadius.all(Radius.circular(999))),
@@ -27,9 +27,9 @@ class LabelChip extends StatelessWidget {
             children: [
               selected
                   ? Container(
-                      height: 14,
-                      width: 14,
-                      margin: EdgeInsets.only(right: 14),
+                      height: 12,
+                      width: 12,
+                      margin: EdgeInsets.only(right: 12),
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(999))),
@@ -38,9 +38,10 @@ class LabelChip extends StatelessWidget {
               Text(
                 text,
                 style: const TextStyle(
+                    fontFamily: "Manrope",
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 21),
+                    fontSize: 18),
               )
             ]),
       ),
