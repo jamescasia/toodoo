@@ -8,6 +8,7 @@ import 'package:toodoo/views/AddTaskModal.dart';
 import 'package:toodoo/utils/ScrollBehaviour.dart';
 import 'package:toodoo/views/DeleteTaskModal.dart';
 import 'package:toodoo/views/MarkDoneTaskModal.dart';
+import 'package:toodoo/views/MarkUndoneTaskModal.dart';
 
 import '../models/AppModel.dart';
 import '../models/Task.dart';
@@ -133,7 +134,10 @@ class HomePage extends StatelessWidget {
                       ? DeleteTaskModal(appModel.taskBeingDeleted)
                       : appModel.appState == AppState.MarkingDoneTask
                           ? MarkDoneTaskModal(appModel.taskBeingMarkedDone)
-                          : SizedBox()
+                          : appModel.appState == AppState.MarkingUndoneTask
+                              ? MarkUndoneTaskModal(
+                                  appModel.taskBeingMarkedUndone)
+                              : SizedBox()
 
               // AddTaskModal()
             ],
