@@ -4,6 +4,7 @@ import 'package:toodoo/models/AppModel.dart';
 import 'package:toodoo/models/Task.dart';
 import 'package:toodoo/utils/Constants.dart';
 
+/* Delete Task Modal is modal for deleting task */
 class DeleteTaskModal extends StatefulWidget {
   DeleteTaskModal(this.task);
   Task? task;
@@ -16,8 +17,8 @@ class _DeleteTaskModalState extends State<DeleteTaskModal> {
   _DeleteTaskModalState(this.task);
   Task? task;
 
-  double popupWidth = 900;
-  double popupHeight = 700;
+  double popupWidth = 200;
+  double popupHeight = 0;
 
   void afterBuild(BuildContext context) {
     setState(() {
@@ -33,7 +34,7 @@ class _DeleteTaskModalState extends State<DeleteTaskModal> {
       return Stack(
         children: [
           Container(
-            color: Constants.delColor,
+            color: Constants.delColor.withOpacity(0.9),
           ),
           Center(
               child: Column(

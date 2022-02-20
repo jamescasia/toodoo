@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:toodoo/views/MarkDoneTaskModal.dart';
+import 'package:toodoo/views/MarkUndoneTaskModal.dart';
 
 import '../models/AppModel.dart';
 import '../models/Task.dart';
 import '../utils/Constants.dart';
 
+/* 
+TaskEntry is the widget for the specific task.
+*/
 class TaskEntry extends StatelessWidget {
   TaskEntry(this.task);
 
@@ -43,6 +48,8 @@ class TaskEntry extends StatelessWidget {
                     onTap: () {
                       if (!task.done) {
                         appModel.showMarkDoneTaskModal(task);
+                      } else {
+                        appModel.showMarkUndoneTaskModal(task);
                       }
                     },
                     child: Container(

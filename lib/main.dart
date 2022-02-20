@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TooDoo',
+      // ScopedModel is defined here so it doesn't rebuild.
       home: ScopedModel(model: AppModel(), child: HomePage()),
     );
   }

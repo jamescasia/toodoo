@@ -4,6 +4,7 @@ import 'package:toodoo/models/AppModel.dart';
 import 'package:toodoo/models/Task.dart';
 import 'package:toodoo/utils/Constants.dart';
 
+/* MarkUndoneTaskModal is a modal for marking at ask as not done*/
 class MarkUndoneTaskModal extends StatefulWidget {
   MarkUndoneTaskModal(this.task);
   Task? task;
@@ -33,7 +34,7 @@ class _MarkUndoneTaskModalState extends State<MarkUndoneTaskModal> {
       return Stack(
         children: [
           Container(
-            color: Constants.notDonecolor,
+            color: Constants.notDonecolor.withOpacity(0.9),
           ),
           Center(
               child: Column(

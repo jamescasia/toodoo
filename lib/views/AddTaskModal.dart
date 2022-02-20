@@ -8,6 +8,7 @@ import 'package:toodoo/models/Task.dart';
 import '../models/AppModel.dart';
 import '../utils/Constants.dart';
 
+/* AddTaskModal is a modal for adding a new task */
 class AddTaskModal extends StatefulWidget {
   const AddTaskModal({Key? key}) : super(key: key);
 
@@ -22,8 +23,8 @@ class _AddTaskModalState extends State<AddTaskModal> {
   final FocusNode descFocus = FocusNode();
   bool titleError = false;
   bool descError = false;
-  double popupWidth = 900;
-  double popupHeight = 900;
+  double popupWidth = 500;
+  double popupHeight = 500;
 
   void afterBuild(BuildContext context) {
     setState(() {
@@ -50,7 +51,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
               Center(
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 110),
-                  curve: Curves.bounceIn,
+                  curve: Curves.easeOutExpo,
                   height: popupHeight,
                   width: popupWidth,
                   margin: EdgeInsets.symmetric(vertical: 8.5),

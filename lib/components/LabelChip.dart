@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../utils/Constants.dart';
 
+/* 
+This is the generic widget used to switch which types of tasks to view.
+*/
 class LabelChip extends StatelessWidget {
   LabelChip(this.text, this.selected, this.color);
 

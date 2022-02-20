@@ -1,24 +1,28 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:toodoo/models/Task.dart';
 
+/* 
+AppModel stores all the app state. It extends Model, which is used by ScopedModel state management tool.
+ */
 class AppModel extends Model {
+  // initialize
   List<Task> tasks = [];
-
   List<Task> tasksBeingViewed = [];
-
   ViewingState viewingState = ViewingState.All;
   AppState appState = AppState.ViewingTasks;
+  // Task variables for task being interacted with
   Task? taskBeingDeleted;
   Task? taskBeingMarkedDone;
+  Task? taskBeingMarkedUndone;
 
   AppModel() {
     this.setTasks([
-      Task("1", "Walk the dogs", "walk the dogs and do 5 laps", true, false),
+      Task("1", "Walk the dogs", "walk lil Aki and do 5 laps", true, false),
       Task("2", "Get laundry", "Get laundry at laundryhouse at 3PM", false,
           false),
-      Task("3", "Study for Calculus exam", "walk the dogs and do 5 laps", true,
-          false),
-      Task("4", "Go sleep", "Get laundry at laundryhouse at 3PM", false, false),
+      Task("3", "Study for Calculus exam",
+          "Study limits, infinite series, limits at infinity.", true, false),
+      Task("4", "Workout", "Workout and burn calories", false, false),
     ]);
     this.tasksBeingViewed = List.from(this.tasks);
   }
@@ -63,7 +67,7 @@ class AppModel extends Model {
         })
         .toList()
         .cast();
-
+// also update the tasks being viewed
     this.tasksBeingViewed = this
         .tasksBeingViewed
         .map((t) {
@@ -83,12 +87,19 @@ class AppModel extends Model {
     updateTask(this.taskBeingMarkedDone);
   }
 
+// Mark task as undone
+  void markTaskAsUndone() {
+    taskBeingMarkedUndone!.done = false;
+    updateTask(this.taskBeingMarkedUndone);
+  }
+
 // Tasks setter
   void setTasks(tasks) {
     this.tasks = tasks;
     this.tasksBeingViewed = this.tasks;
   }
 
+// add task to tasks
   void addTask(task) {
     this.tasks.add(task);
     if (this.viewingState != ViewingState.NotDone) {
@@ -108,7 +119,7 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  // Show delete task modal
+  // Show and hide delete task modal
   void showDeleteTaskModal(Task task) {
     this.appState = AppState.DeletingTask;
     this.taskBeingDeleted = task;
@@ -120,7 +131,7 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  // show finish task modal
+  // show and hide mark done task modal
   void showMarkDoneTaskModal(Task task) {
     this.appState = AppState.MarkingDoneTask;
     this.taskBeingMarkedDone = task;
@@ -128,6 +139,18 @@ class AppModel extends Model {
   }
 
   void hideMarkDoneTaskModal() {
+    this.appState = AppState.ViewingTasks;
+    notifyListeners();
+  }
+
+// show and hide mark undone task modal
+  void showMarkUndoneTaskModal(Task task) {
+    this.appState = AppState.MarkingUndoneTask;
+    this.taskBeingMarkedUndone = task;
+    notifyListeners();
+  }
+
+  void hideMarkUndoneTaskModal() {
     this.appState = AppState.ViewingTasks;
     notifyListeners();
   }
@@ -139,5 +162,6 @@ enum AppState {
   AddingTask,
   DeletingTask,
   MarkingDoneTask,
+  MarkingUndoneTask,
   ViewingTasks,
 }

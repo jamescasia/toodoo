@@ -4,6 +4,7 @@ import 'package:toodoo/models/AppModel.dart';
 import 'package:toodoo/models/Task.dart';
 import 'package:toodoo/utils/Constants.dart';
 
+/* MarkDoneTaskModal is a modal for marking at ask as done*/
 class MarkDoneTaskModal extends StatefulWidget {
   MarkDoneTaskModal(this.task);
   Task? task;
@@ -32,7 +33,7 @@ class _MarkDoneTaskModalState extends State<MarkDoneTaskModal> {
       return Stack(
         children: [
           Container(
-            color: Constants.doneColor,
+            color: Constants.doneColor.withOpacity(0.9),
           ),
           Center(
               child: Column(

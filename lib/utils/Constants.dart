@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/* Constants contains static constants for convenience */
 class Constants {
   static const fabColor = Color(0xff00B0DF);
   static const bgColor = Color(0xfff3f3f3);
