@@ -44,30 +44,46 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  // Update tasks
-  void deleteTask() {
-    this.tasks.retainWhere((t) => t.id != this.taskBeingDeleted?.id);
-    this.tasksBeingViewed.retainWhere((t) => t.id != this.taskBeingDeleted?.id);
+  //  Delete task
+  void deleteTask(task) {
+    this.tasks.retainWhere((t) => t.id != task.id);
+    this.tasksBeingViewed.retainWhere((t) => t.id != task.id);
     notifyListeners();
   }
 
+// Update task
   void updateTask(task) {
-    this.tasks.map((t) {
-      if (t.id == task.id) {
-        return task;
-      }
-      return t;
-    });
+    this.tasks = this
+        .tasks
+        .map((t) {
+          if (t.id == task.id) {
+            return task;
+          }
+          return t;
+        })
+        .toList()
+        .cast();
 
-    this.tasksBeingViewed.map((t) {
-      if (t.id == task.id) {
-        return task;
-      }
-      return t;
-    });
+    this.tasksBeingViewed = this
+        .tasksBeingViewed
+        .map((t) {
+          if (t.id == task.id) {
+            return task;
+          }
+          return t;
+        })
+        .toList()
+        .cast();
     notifyListeners();
   }
 
+// Mark task as done
+  void markTaskAsDone() {
+    taskBeingMarkedDone!.done = true;
+    updateTask(this.taskBeingMarkedDone);
+  }
+
+// Tasks setter
   void setTasks(tasks) {
     this.tasks = tasks;
     this.tasksBeingViewed = this.tasks;
