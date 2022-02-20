@@ -1,9 +1,9 @@
 class Task {
+  final String id;
   final String title;
-  final int id;
   final String description;
-  bool expanded;
   bool done;
+  bool expanded;
 
   Task(this.id, this.title, this.description, this.done, this.expanded);
 }

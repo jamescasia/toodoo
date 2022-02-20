@@ -9,6 +9,7 @@ class Constants {
   static const doneColor = Color(0xff47be02);
   static const notDonecolor = Color(0xff444444);
   static const textColor = Color(0xff626262);
+  static const delColor = Color(0xfff54d50);
   static var maxWidth = 0.0;
   static var maxHeight = 0.0;
 }
