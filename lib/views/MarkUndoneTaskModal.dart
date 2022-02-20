@@ -17,8 +17,8 @@ class _MarkUndoneTaskModalState extends State<MarkUndoneTaskModal> {
   _MarkUndoneTaskModalState(this.task);
   Task? task;
   @override
-  double popupWidth = 900;
-  double popupHeight = 700;
+  double popupWidth = 200;
+  double popupHeight = 0;
 
   void afterBuild(BuildContext context) {
     setState(() {
