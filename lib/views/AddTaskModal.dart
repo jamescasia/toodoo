@@ -144,7 +144,8 @@ class _AddTaskModalState extends State<AddTaskModal> {
                       "assets/icons/check_icon.png",
                     ),
                     onPressed: () {
-                      if (titleController.text.isNotEmpty) {
+                      if (titleController.text.isNotEmpty &&
+                          descController.text.isNotEmpty) {
                         Task task = Task(
                             titleController.text +
                                 Random().nextInt(pow(2, 32).toInt()).toString(),
