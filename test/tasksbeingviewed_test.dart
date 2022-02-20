@@ -3,7 +3,7 @@ import 'package:toodoo/models/AppModel.dart';
 import 'package:toodoo/models/Task.dart';
 
 void main() {
-  group('Tasks being viewed', () {
+  group('Tasks being viewed:', () {
     test('Initial tasks being viewed should be equal to tasks', () {
       AppModel appModel = AppModel();
       List<Task> tasks = [

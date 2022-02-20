@@ -3,7 +3,7 @@ import 'package:toodoo/models/AppModel.dart';
 import 'package:toodoo/models/Task.dart';
 
 void main() {
-  group('Viewing State', () {
+  group('Viewing State:', () {
     test('Initial viewing state should be All', () {
       expect(AppModel().viewingState, ViewingState.All);
     });
