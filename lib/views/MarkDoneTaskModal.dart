@@ -16,7 +16,18 @@ class _MarkDoneTaskModalState extends State<MarkDoneTaskModal> {
   _MarkDoneTaskModalState(this.task);
   Task? task;
   @override
+  double popupWidth = 900;
+  double popupHeight = 700;
+
+  void afterBuild(BuildContext context) {
+    setState(() {
+      popupWidth = Constants.maxWidth * 0.8;
+      popupHeight = 160;
+    });
+  }
+
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) => afterBuild(context));
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Stack(
         children: [
@@ -37,9 +48,11 @@ class _MarkDoneTaskModalState extends State<MarkDoneTaskModal> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
-              Container(
-                height: 160,
-                width: Constants.maxWidth * 0.8,
+              AnimatedContainer(
+                duration: Duration(milliseconds: 110),
+                curve: Curves.bounceIn,
+                height: popupHeight,
+                width: popupWidth,
                 margin: EdgeInsets.symmetric(vertical: 8.5),
                 decoration: BoxDecoration(
                     color: Constants.noteColor,
