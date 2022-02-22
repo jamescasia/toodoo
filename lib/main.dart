@@ -13,11 +13,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    AppModel appModel = AppModel();
+    appModel.setContext(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TooDoo',
       // ScopedModel is defined here so it doesn't rebuild.
-      home: ScopedModel(model: AppModel(), child: HomePage()),
+      home: ScopedModel(model: appModel, child: HomePage()),
     );
   }
 }
