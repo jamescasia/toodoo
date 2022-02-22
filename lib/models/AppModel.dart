@@ -1,5 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:toodoo/models/Task.dart';
+import 'package:toodoo/services/ApiProvider.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 /* 
 AppModel stores all the app state. It extends Model, which is used by ScopedModel state management tool.
@@ -14,17 +20,23 @@ class AppModel extends Model {
   Task? taskBeingDeleted;
   Task? taskBeingMarkedDone;
   Task? taskBeingMarkedUndone;
+  http.Client client = http.Client();
+
+  // Buildcontext passed for showing toast.
+  BuildContext? context;
 
   AppModel() {
-    this.setTasks([
-      Task("1", "Walk the dogs", "walk lil Aki and do 5 laps", true, false),
-      Task("2", "Get laundry", "Get laundry at laundryhouse at 3PM", false,
-          false),
-      Task("3", "Study for Calculus exam",
-          "Study limits, infinite series, limits at infinity.", true, false),
-      Task("4", "Workout", "Workout and burn calories", false, false),
-    ]);
-    this.tasksBeingViewed = List.from(this.tasks);
+    inititalizeTasks();
+  }
+// setting context. Required for show toast
+  setContext(BuildContext ctx) {
+    this.context = ctx;
+  }
+
+// iniitalize tasks
+  inititalizeTasks() async {
+    this.setTasks(await getTasks());
+    notifyListeners();
   }
 
   // Switch Viewing State
@@ -48,15 +60,66 @@ class AppModel extends Model {
     notifyListeners();
   }
 
+//  fetch tasks
+  Future<List<Task>> getTasks() async {
+    try {
+      return await ApiProvider().fetchTasks();
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "Failed to get tasks. Please check network connection.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+
+      return [];
+    }
+  }
+
+  // add task to tasks
+  void addTask(task) async {
+    this.tasks.add(task);
+    if (this.viewingState != ViewingState.NotDone) {
+      this.tasksBeingViewed.add(task);
+    }
+    notifyListeners();
+    try {
+      await ApiProvider().uploadTask(task);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "Failed to upload task. Please check network connection.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   //  Delete task
-  void deleteTask(task) {
+  void deleteTask(task) async {
     this.tasks.retainWhere((t) => t.id != task.id);
     this.tasksBeingViewed.retainWhere((t) => t.id != task.id);
     notifyListeners();
+    try {
+      await ApiProvider().deleteTask(task);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "Failed to delete task. Please check network connection.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
 // Update task
-  void updateTask(task) {
+  void updateTask(task) async {
     this.tasks = this
         .tasks
         .map((t) {
@@ -79,6 +142,18 @@ class AppModel extends Model {
         .toList()
         .cast();
     notifyListeners();
+    try {
+      await ApiProvider().updateTask(task);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "Failed to update task. Please check network connection.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
 // Mark task as done
@@ -97,15 +172,6 @@ class AppModel extends Model {
   void setTasks(tasks) {
     this.tasks = tasks;
     this.tasksBeingViewed = this.tasks;
-  }
-
-// add task to tasks
-  void addTask(task) {
-    this.tasks.add(task);
-    if (this.viewingState != ViewingState.NotDone) {
-      this.tasksBeingViewed.add(task);
-    }
-    notifyListeners();
   }
 
   // Show add task modal
