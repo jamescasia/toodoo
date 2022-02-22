@@ -10,7 +10,14 @@ class Task {
   Task(this.id, this.title, this.description, this.done, this.expanded);
 
   factory Task.fromJson(Map<String, dynamic> json) {
-    return Task(json['id'], json['title'], json['description'], json['done'],
-        json['expanded']);
+    return Task(json['id'], json['title'], json['description'],
+        json['done'] == 'true', json['expanded'] == 'true');
   }
+  Map toJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'done': done.toString(),
+        'expanded': expanded.toString()
+      };
 }
