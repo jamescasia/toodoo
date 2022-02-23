@@ -138,6 +138,7 @@ class _DeleteTaskModalState extends State<DeleteTaskModal> {
               bottom: 0,
               right: 0,
               child: MaterialButton(
+                  key: Key('delete-task-modal-check-btn'),
                   height: 72,
                   minWidth: 72,
                   color: Constants.fabColor,
@@ -159,6 +160,7 @@ class _DeleteTaskModalState extends State<DeleteTaskModal> {
               bottom: 0,
               left: 0,
               child: MaterialButton(
+                  key: Key('delete-task-modal-close-btn'),
                   height: 72,
                   minWidth: 72,
                   color: Constants.allColor,
