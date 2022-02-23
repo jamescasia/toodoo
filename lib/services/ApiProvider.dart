@@ -7,8 +7,7 @@ import 'package:toodoo/services/Env.dart';
  * Class for performing http requests, fetch, upload, delete, and update
  */
 class ApiProvider {
-  Future<List<Task>> fetchTasks() async {
-    http.Client client = http.Client();
+  Future<List<Task>> fetchTasks(http.Client client) async {
     final response = await client.get(Uri.parse(Environment.URL.toString()));
 
     if (response.statusCode == 200) {
@@ -19,25 +18,20 @@ class ApiProvider {
       final List<Task> tasks = jsonlist.map((t) => Task.fromJson(t)).toList();
       return tasks;
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load tasks');
+      return [];
     }
   }
 
-  uploadTask(Task task) async {
-    http.Client client = http.Client();
+  uploadTask(http.Client client, Task task) async {
     return await client.post(Uri.parse(Environment.URL), body: task.toJson());
   }
 
-  deleteTask(Task task) async {
-    http.Client client = http.Client();
+  deleteTask(http.Client client, Task task) async {
     return await client.delete(Uri.parse(Environment.URL + "/${task.id}"),
         body: task.toJson());
   }
 
-  updateTask(Task task) async {
-    http.Client client = http.Client();
+  updateTask(http.Client client, Task task) async {
     return await client.patch(Uri.parse(Environment.URL + "/${task.id}"),
         body: task.toJson());
   }

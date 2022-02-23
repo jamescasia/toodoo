@@ -63,12 +63,13 @@ class AppModel extends Model {
 //  fetch tasks
   Future<List<Task>> getTasks() async {
     try {
-      return await ApiProvider().fetchTasks();
+      return await ApiProvider().fetchTasks(client);
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "Failed to get tasks. Please check network connection.",
+          msg:
+              "Failed to get tasks. Please check network connection.${e.toString()}",
           toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
@@ -81,17 +82,19 @@ class AppModel extends Model {
   // add task to tasks
   void addTask(task) async {
     this.tasks.add(task);
-    if (this.viewingState != ViewingState.NotDone) {
+    if (this.viewingState != ViewingState.Done &&
+        !this.tasksBeingViewed.contains(task)) {
       this.tasksBeingViewed.add(task);
     }
     notifyListeners();
     try {
-      await ApiProvider().uploadTask(task);
+      await ApiProvider().uploadTask(client, task);
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "Failed to upload task. Please check network connection.",
+          msg:
+              "Failed to upload task. Please check network connection.${e.toString()}",
           toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
@@ -105,12 +108,13 @@ class AppModel extends Model {
     this.tasksBeingViewed.retainWhere((t) => t.id != task.id);
     notifyListeners();
     try {
-      await ApiProvider().deleteTask(task);
+      await ApiProvider().deleteTask(client, task);
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "Failed to delete task. Please check network connection.",
+          msg:
+              "Failed to delete task. Please check network connection. ${e.toString()}",
           toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
@@ -143,12 +147,13 @@ class AppModel extends Model {
         .cast();
     notifyListeners();
     try {
-      await ApiProvider().updateTask(task);
+      await ApiProvider().updateTask(client, task);
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "Failed to update task. Please check network connection.",
+          msg:
+              "Failed to update task. Please check network connection.${e.toString()}",
           toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
