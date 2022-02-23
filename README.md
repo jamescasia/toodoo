@@ -1,5 +1,5 @@
 # Toodoo - a simple todo-list-app with Flutter
-
+![Demo](demo.gif)
 ## Setup
 
 ### Database
@@ -63,7 +63,7 @@ To make your database available beyound your local server, download **ngrok**. U
 unzip /path/to/ngrok.zip
 ```
 
-Create an ngrok account and get your auth token then onnect your account
+Create an ngrok account and get your auth token then connect your account
 
 ```python
 ngrok authtoken YOUR_AUTH_TOKEN_HERE
@@ -79,7 +79,7 @@ Your rest api can now be accessed anywhere through the outputted url. Copy and s
 
 ### Flutter app setup
 
-Flutter is used for this app, to setup Flutter, follow the instructions [here](https://docs.flutter.dev/get-started/install). First, clone this repository
+Flutter is used for this app, to setup Flutter, follow the instructions [here](https://docs.flutter.dev/get-started/install). Then clone this repository
 
 ```python
 git clone https://github.com/jamescasia/toodoo.git
@@ -102,3 +102,11 @@ flutter build apk --release
 This will build the apk. When it’s done, navigate to **toodoo\build\app\outputs\apk\release** and copy the **app-release.apk** on your device or emulator.
 
 Enjoy and be more productive with **Toodoo**
+
+### Testing(optional)
+
+To run the tests, enter the command
+
+```python
+flutter test
+```
