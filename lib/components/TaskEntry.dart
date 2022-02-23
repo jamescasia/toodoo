@@ -24,6 +24,7 @@ class TaskEntry extends StatelessWidget {
           appModel.updateTask(task);
         },
         child: AnimatedContainer(
+          key: Key('task-entry-${task.title}'),
           height: task.expanded ? 160 : 60,
           width: Constants.maxWidth * 0.8,
           margin: EdgeInsets.symmetric(vertical: 8.5),
@@ -45,6 +46,7 @@ class TaskEntry extends StatelessWidget {
               child: Row(
                 children: [
                   InkWell(
+                    key: Key('task-entry-mark-btn-${task.title}'),
                     onTap: () {
                       if (!task.done) {
                         appModel.showMarkDoneTaskModal(task);
@@ -55,6 +57,7 @@ class TaskEntry extends StatelessWidget {
                     child: Container(
                         width: 34,
                         height: 34,
+                        key: Key('task-entry-mark-status-${task.title}'),
                         decoration: BoxDecoration(
                             color: task.done
                                 ? Constants.doneColor
@@ -85,6 +88,7 @@ class TaskEntry extends StatelessWidget {
                   ),
                   Spacer(),
                   InkWell(
+                    key: Key('task-entry-del-btn-${task.title}'),
                     onTap: () {
                       appModel.showDeleteTaskModal(task);
                     },
@@ -110,11 +114,11 @@ class TaskEntry extends StatelessWidget {
             ),
             task.expanded
                 ? Container(
-                    height: 100,
+                    height: 104,
                     padding: EdgeInsets.symmetric(horizontal: 26, vertical: 12),
                     decoration: BoxDecoration(
                       borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(42)),
+                          BorderRadius.vertical(bottom: Radius.circular(30)),
                       color: Constants.noteColorLight,
                     ),
                     child: Align(

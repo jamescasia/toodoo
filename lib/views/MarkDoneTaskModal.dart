@@ -130,6 +130,7 @@ class _MarkDoneTaskModalState extends State<MarkDoneTaskModal> {
               bottom: 0,
               right: 0,
               child: MaterialButton(
+                  key: Key('mark-task-modal-check-btn'),
                   height: 72,
                   minWidth: 72,
                   color: Constants.fabColor,
@@ -151,6 +152,7 @@ class _MarkDoneTaskModalState extends State<MarkDoneTaskModal> {
               bottom: 0,
               left: 0,
               child: MaterialButton(
+                  key: Key('mark-task-modal-close-btn'),
                   height: 72,
                   minWidth: 72,
                   color: Constants.allColor,

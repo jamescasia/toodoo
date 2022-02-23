@@ -39,6 +39,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
     return ScopedModelDescendant<AppModel>(builder: (context, child, appModel) {
       return Center(
         child: InkWell(
+          key: Key('add-task-modal-barrier'),
           onTap: () {
             appModel.hideAddTaskModal();
             FocusScope.of(context).requestFocus(FocusNode());
@@ -70,6 +71,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         padding: EdgeInsets.only(left: 24, right: 24, top: 14),
                         child: Center(
                           child: TextField(
+                            key: Key('add-task-modal-title-field'),
                             controller: titleController,
                             maxLength: 30,
                             maxLines: 1,
@@ -123,6 +125,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                       child: Align(
                           alignment: Alignment.topLeft,
                           child: TextField(
+                            key: Key('add-task-modal-desc-field'),
                             controller: descController,
                             maxLength: 70,
                             maxLines: 3,
@@ -176,6 +179,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                   bottom: 0,
                   right: 0,
                   child: MaterialButton(
+                      key: Key('add-task-modal-submit-btn'),
                       height: 72,
                       minWidth: 72,
                       color: Constants.fabColor,
