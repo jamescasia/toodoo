@@ -1,5 +1,5 @@
 # Toodoo - a simple todo-list-app with Flutter
-Download apk [here](https://github.com/jamescasia/toodoo/releases/download/release/app-release.apk)
+Download apk [here](https://github.com/jamescasia/toodoo/releases/download/latest/app-release.apk)
 ![Demo](demo.gif)
 ## Setup
 
